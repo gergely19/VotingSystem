@@ -1,0 +1,83 @@
+﻿@page "/polls"
+@using VotingSystem.Blazor.WebAssembly.Services
+@using VotingSystem.Blazor.WebAssembly.Layout
+@using VotingSystem.Blazor.WebAssembly.ViewModels
+@inject IPollService PollService
+@inject NavigationManager NavigationManager
+
+
+<h1>Polls</h1>
+
+<CustomConfirmModal T="Guid" @ref="_modalPollDelete" Title="Confirm Deletion" Body="Are you sure you want to delete this movie?" OnConfirm="DeletePoll" OnCancel="CancelDelete" />
+
+
+@if (_polls is null)
+{
+    <p>Betöltés...</p>
+}
+else if (!_polls.Any())
+{
+    <p>Nem található szavazás.</p>
+}
+else
+{
+    <div class="my-4 container">
+        <div class="g-4 row row-cols-md-3 row-cols-1">
+            @foreach (var poll in _polls)
+            {
+                <div class="col">
+                    <div class="h-100 card" @onclick="() => ViewPoll(poll.Id)" style="cursor: pointer;">
+                        <div class="card-body">
+                            <h5 class="card-title">@poll.Question</h5>
+                            <p class="card-text">
+                                <strong>Start:</strong> @poll.StartDate.ToString("yyyy-MM-dd HH:mm")<br />
+                                <strong>End:</strong> @poll.EndDate.ToString("yyyy-MM-dd HH:mm")
+                            </p>
+                        </div>
+@*                         <div class="d-flex justify-content-end me-2 mb-2">
+                            <button class="btn btn-danger" @onclick="() => ShowDeleteConfirmModal(poll.Id)" >
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div> *@
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+@* @onclick="() => EditMovie(movie.Id)" style="cursor: pointer;" *@
+
+
+@code {
+
+    private List<PollViewModel>? _polls;
+    private CustomConfirmModal<Guid>? _modalPollDelete;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _polls = await PollService.GetPollsAsync();
+        StateHasChanged();
+    }
+    private void ViewPoll(Guid id){
+        NavigationManager.NavigateTo($"/polls/{id}");
+    }
+
+    private void ShowDeleteConfirmModal(Guid pollId)
+    {
+        _modalPollDelete!.Show(pollId);
+    }
+            
+    private async Task DeletePoll(Guid pollId)
+    {
+        await PollService.DeletePollAsync(pollId);
+        _polls = await PollService.GetPollsAsync();
+        _modalPollDelete!.Hide();
+        StateHasChanged();
+    }
+        
+    private void CancelDelete()
+    {
+        _modalPollDelete!.Hide();
+    }
+}

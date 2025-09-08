@@ -1,0 +1,103 @@
+﻿@page "/polls/add"
+@using System.Linq.Expressions
+@using VotingSystem.Blazor.WebAssembly.Config
+@using VotingSystem.Blazor.WebAssembly.Exception
+@using VotingSystem.Blazor.WebAssembly.Services
+@using VotingSystem.Blazor.WebAssembly.ViewModels
+@inject NavigationManager NavigationManager
+@inject IPollService PollService
+
+<h1>Új szavazás létrehozása</h1>
+
+
+<EditForm Model="_poll" OnValidSubmit="SavePollAsync">
+    <DataAnnotationsValidator />
+
+    <!-- Question -->
+    <div class="mb-3">
+        <label class="form-label" for="question">Kérdés:</label>
+        <InputText id="question" class="form-control" @bind-Value="_poll.Question" />
+        <ValidationMessage For="@(() => _poll.Question)" class="text-danger" />
+    </div>
+
+    <!-- Start date -->
+    <div class="mb-3">
+        <label class="form-label" for="start">Kezdés időpont:</label>
+        <input id="start" type="datetime-local" class="form-control"
+        @bind="_poll.StartDate" />
+        <ValidationMessage For="@(() => _poll.StartDate)" class="text-danger" />
+    </div>
+
+    <!-- End date -->
+    <div class="mb-3">
+        <label class="form-label" for="end">Befejező dátum:</label>
+        <input id="end" type="datetime-local" class="form-control"
+        @bind="_poll.EndDate" />
+        <ValidationMessage For="@(() => _poll.EndDate)" class="text-danger" />
+    </div>
+
+    <!-- Options -->
+    <div class="mb-3">
+        <label class="form-label">Options:</label>
+        <button type="button" class="btn btn-success m-2" @onclick="AddOption">Opció hozzáadása</button>
+
+        @for (int i = 0; i < _poll.Options.Count; i++)
+        {
+            var option = _poll.Options[i];
+            <div class="d-flex mb-2" @key="option.Id">
+                <InputText class="form-control option-input" @bind-Value="option.Text" />
+                @if (_poll.Options.Count > 2)
+                {
+                    <button type="button" class="btn btn-danger ms-2" @onclick="() => RemoveOption(option)">Eltávolítás</button>
+                }
+            </div>
+            <ValidationMessage For="GetOptionTextExpression(i)" class="text-danger" />
+        }
+
+
+        <ValidationMessage For="@(() => _poll.Options)" class="text-danger" />
+    </div>
+
+    <button id="submitBtn"  type="submit" class="btn btn-primary">Szavazás létrehozása</button>
+</EditForm>
+
+@code {
+    private readonly PollViewModel _poll = new();
+
+    protected override void OnInitialized()
+    {
+        while (_poll.Options.Count < 2)
+            _poll.Options.Add(new OptionViewModel { Id = Guid.NewGuid(), Text = string.Empty });
+        _poll.StartDate = DateTime.Now;
+        _poll.EndDate = DateTime.Now.AddMinutes(20);
+    }
+
+    private void AddOption()
+    {
+        _poll.Options.Add(new OptionViewModel { Id = Guid.NewGuid(), Text = string.Empty });
+    }
+
+    private void RemoveOption(OptionViewModel option)
+    {
+        if (_poll.Options.Count > 2)
+            _poll.Options.Remove(option);
+    }
+
+    private async Task SavePollAsync()
+    {
+        try
+        {
+            await PollService.CreatePollAsync(_poll);
+            NavigationManager.NavigateTo("/polls");
+        }
+        catch(Exception) {
+
+        }
+    }
+
+    private Expression<Func<string>> GetOptionTextExpression(int index)
+    {
+        return () => _poll.Options[index].Text;
+    }
+
+}

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem.WebAPI", "VotingSystem.WebAPI\VotingSystem.WebAPI.csproj", "{5AC0B2F9-629D-4740-A195-CF1554810CBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem.DataAccess", "VotingSystem.DataAccess\VotingSystem.DataAccess.csproj", "{9677C05A-B52B-44E6-B735-BBECBE2946AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem.Shared", "VotingSystem.Shared\VotingSystem.Shared.csproj", "{3344B7CE-7793-4ADA-A120-67B92F23CB13}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "votingsystem.react.client", "VotingSystem.React\votingsystem.react.client\votingsystem.react.client.esproj", "{F696F40B-E72D-4D58-A830-48428E32D7EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem.Blazor.WebAssembly", "VotingSystem.Blazor.WebAssembly\VotingSystem.Blazor.WebAssembly.csproj", "{E1526579-1CFD-4024-9E83-294434C6FE4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem.Tests", "VotingSystem.Tests\VotingSystem.Tests.csproj", "{F5E88EAC-00C3-4B6F-A5F0-FE6C0E45EE83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AC0B2F9-629D-4740-A195-CF1554810CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC0B2F9-629D-4740-A195-CF1554810CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC0B2F9-629D-4740-A195-CF1554810CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC0B2F9-629D-4740-A195-CF1554810CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9677C05A-B52B-44E6-B735-BBECBE2946AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9677C05A-B52B-44E6-B735-BBECBE2946AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9677C05A-B52B-44E6-B735-BBECBE2946AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9677C05A-B52B-44E6-B735-BBECBE2946AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3344B7CE-7793-4ADA-A120-67B92F23CB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3344B7CE-7793-4ADA-A120-67B92F23CB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3344B7CE-7793-4ADA-A120-67B92F23CB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3344B7CE-7793-4ADA-A120-67B92F23CB13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F696F40B-E72D-4D58-A830-48428E32D7EC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E1526579-1CFD-4024-9E83-294434C6FE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1526579-1CFD-4024-9E83-294434C6FE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1526579-1CFD-4024-9E83-294434C6FE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1526579-1CFD-4024-9E83-294434C6FE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E88EAC-00C3-4B6F-A5F0-FE6C0E45EE83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E88EAC-00C3-4B6F-A5F0-FE6C0E45EE83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E88EAC-00C3-4B6F-A5F0-FE6C0E45EE83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E88EAC-00C3-4B6F-A5F0-FE6C0E45EE83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE120486-6562-4C3C-BAAD-445262E077D5}
+	EndGlobalSection
+EndGlobal

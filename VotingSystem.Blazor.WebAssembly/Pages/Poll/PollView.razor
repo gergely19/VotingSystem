@@ -1,0 +1,92 @@
+﻿@using VotingSystem.Blazor.WebAssembly.Services
+@using VotingSystem.Blazor.WebAssembly.ViewModels
+@using System.Globalization
+@using VotingSystem.Shared.Models
+@using AutoMapper
+@inject HttpClient Http
+@inject IMapper Mapper
+@inject IPollService PollService
+
+
+@page "/polls/{PollId:guid}"
+
+<h3>Szavazás adatai</h3>
+
+@if (Poll == null)
+{
+    <p>Szavazások betöltése...</p>
+}
+else
+{
+    <div class="card my-3 shadow-sm w-75 mx-auto">
+        <div class="card-body">
+            <h5 class="card-title">@Poll.Question</h5>
+            <p class="card-subtitle text-muted">
+                Szavazás kezdete: @Poll.StartDate.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+            </p>
+            <p class="card-subtitle text-muted">
+                Határidő: @Poll.EndDate.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+            </p>
+
+            <ul class="list-group list-group-flush mt-3">
+                @foreach (var option in Poll.Options)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @option.Text
+                        <span class="badge bg-primary rounded-pill">@option.VoteCount votes</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="card w-75 mx-auto my-3">
+        <div class="card-body">
+            <h5 class="card-title">Szavazók</h5>
+            @if (Poll.UserPolls != null && Poll.UserPolls.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var userPoll in Poll.UserPolls)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @userPoll.UserId
+                            <span class="badge @(userPoll.HasVoted ? "bg-success" : "bg-secondary")">
+                                @(userPoll.HasVoted ? "Szavazott" : "Nem szavazott")
+                            </span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">Nincsenek regisztrált szavazók.</p>
+            }
+        </div>
+    </div>
+}
+
+
+@code {
+
+
+
+    [Parameter]
+    public Guid PollId { get; set; }
+
+    private PollViewModel? Poll;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Poll = await PollService.GetPollByIdAsync(PollId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading poll: {ex.Message}");
+        }
+
+    }
+
+    
+}
